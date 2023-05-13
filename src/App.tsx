@@ -1,7 +1,12 @@
 import React from "react";
+import Timer from "./components/timer/Timer";
 
 function App() {
-  return <h1>Hello World!</h1>;
+  return (
+    <>
+      <Timer />
+    </>
+  );
 }
 
 export default App;
