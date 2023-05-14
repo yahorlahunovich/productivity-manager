@@ -5,13 +5,19 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  time: 0,
+  time: 72
 };
 
 const timerSlice = createSlice({
   name: "timer",
   initialState,
-  reducers: {},
+  reducers: {
+    timeIncrement(state) {
+      state.time = state.time - 1;
+      console.log("increment");
+    },
+  },
 });
 
-export default timerSlice.reducer;
+export const timerActions = timerSlice.actions;
+export const timerReducer = timerSlice.reducer;
