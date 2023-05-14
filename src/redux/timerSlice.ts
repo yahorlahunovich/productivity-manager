@@ -1,20 +1,26 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   time: number;
+  isTimerOn: boolean;
 };
 
 const initialState: InitialState = {
-  time: 72
+  time: 25*60,
+  isTimerOn: false,
 };
 
 const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    timeIncrement(state) {
-      state.time = state.time - 1;
-      console.log("increment");
+    setTime(state, action: PayloadAction<number>) {
+      console.log("click");
+      state.time = action.payload;
+      console.log(`state time =${state.time}`);
+    },
+    setIsTimerOn(state) {
+      state.isTimerOn = !state.isTimerOn;
     },
   },
 });
