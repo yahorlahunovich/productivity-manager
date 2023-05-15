@@ -1,23 +1,33 @@
-import React, { useEffect   } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { timerActions } from "../../redux/timerSlice";
 import { useTimer } from "use-timer";
 
 export default function Timer() {
+  const [selectedTime, setSelectedTime] = useState<number>(60 * 25);
   const dispatch = useAppDispatch();
   const initTime = useAppSelector((state) => state.timer.time);
+  const currentMode = useAppSelector((state) => state.timer.currentMode);
   const isTimerOn = useAppSelector((state) => state.timer.isTimerOn);
   const { time, start, pause, reset, status } = useTimer({
-    initialTime: initTime,
+    initialTime: selectedTime,
+    // currentMode === "pomodoro"
+    //   ? 25 * 60
+    //   : currentMode === "shortBreak"
+    //   ? 5 * 60
+    //   : 15 * 60,
     timerType: "DECREMENTAL",
     endTime: 0,
     onTimeOver: () => {
       audioPlay();
     },
   });
+  const titleName = currentMode === "pomodoro" ? "focus!" : "relax!";
   useEffect(() => {
-    console.log("time is changed");
-  }, [initTime]);
+    document.title = `${minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    } - ${titleName}`;
+  }, [time, titleName]);
   const onTimer = () => {
     if (time === initTime) audioPlay();
     start();
@@ -28,6 +38,7 @@ export default function Timer() {
     dispatch(timerActions.setIsTimerOn());
   };
   const onPomodoro = () => {
+    console.log("adsas");
     if (isTimerOn) pause();
     if (isTimerOn) dispatch(timerActions.setIsTimerOn());
     dispatch(timerActions.setTime(25 * 60));
@@ -36,9 +47,12 @@ export default function Timer() {
   const onShortBreak = () => {
     if (isTimerOn) pause();
     if (isTimerOn) dispatch(timerActions.setIsTimerOn());
+    dispatch(timerActions.setCurrentMode("shortBreak"));
     dispatch(timerActions.setTime(5 * 60));
     reset();
+    setSelectedTime((prevState) => (prevState = 5 * 25));
   };
+  console.log(selectedTime);
   function audioPlay() {
     new Audio(require("../../assets/audio/mainSound.mp3")).play();
   }
