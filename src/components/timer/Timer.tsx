@@ -12,26 +12,22 @@ export default function Timer() {
   const shortBreakTime = useAppSelector((state) => state.timer.shortBreakTime);
   const longBreakTime = useAppSelector((state) => state.timer.longBreakTime);
   const titleName = currentMode === "pomodoro" ? "focus!" : "relax!";
-  // useEffect(() => {
-  //   document.title = `${minutes}:${
-  //     seconds < 10 ? `0${seconds}` : seconds
-  //   } - ${titleName}`;
-  // }, [time, titleName]);
-  // const onTimer = () => {
-  //   if (time === initTime) audioPlay();
-  //   start();
-  //   dispatch(timerActions.setIsTimerOn());
-  // };
+  useEffect(() => {
+    document.title = `${minutes}:${
+      seconds < 10 ? `0${seconds}` : seconds
+    } - ${titleName}`;
+  }, [time, titleName]);
   const toggleTimer = () => {
     dispatch(timerActions.setIsTimerOn(!isTimerOn));
+    if (!isTimerOn && initialTime === time) audioPlay();
   };
   const resetTimer = () => {
     dispatch(timerActions.setTime(initialTime));
     dispatch(timerActions.setIsTimerOn(false));
   };
+  const minutes = Math.floor(time / 60);
+  const seconds = time - minutes * 60;
   const getTime = () => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time - minutes * 60;
     return `${minutes < 10 ? "0" + minutes : minutes}:${
       seconds < 10 ? "0" + seconds : seconds
     }`;
@@ -40,17 +36,20 @@ export default function Timer() {
     dispatch(timerActions.setTime(pomodoroTime));
     dispatch(timerActions.setInitialTime(pomodoroTime));
     dispatch(timerActions.setIsTimerOn(false));
+    dispatch(timerActions.setCurrentMode("pomodoro"));
     // setInitialTime(workTime);
   };
   const onShortBreak = () => {
     dispatch(timerActions.setTime(shortBreakTime));
     dispatch(timerActions.setInitialTime(shortBreakTime));
     dispatch(timerActions.setIsTimerOn(false));
+    dispatch(timerActions.setCurrentMode("shortBreak"));
   };
   const onLongBreak = () => {
     dispatch(timerActions.setTime(longBreakTime));
     dispatch(timerActions.setInitialTime(longBreakTime));
     dispatch(timerActions.setIsTimerOn(false));
+    dispatch(timerActions.setCurrentMode("longBreak"));
   };
   function audioPlay() {
     new Audio(require("../../assets/audio/mainSound.mp3")).play();
