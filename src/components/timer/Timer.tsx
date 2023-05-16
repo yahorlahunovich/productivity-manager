@@ -1,63 +1,68 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { timerActions } from "../../redux/timerSlice";
-import { useTimer } from "use-timer";
 
 export default function Timer() {
-  const [selectedTime, setSelectedTime] = useState<number>(60 * 25);
   const dispatch = useAppDispatch();
-  const initTime = useAppSelector((state) => state.timer.time);
   const currentMode = useAppSelector((state) => state.timer.currentMode);
   const isTimerOn = useAppSelector((state) => state.timer.isTimerOn);
-  const { time, start, pause, reset, status } = useTimer({
-    initialTime: selectedTime,
-    // currentMode === "pomodoro"
-    //   ? 25 * 60
-    //   : currentMode === "shortBreak"
-    //   ? 5 * 60
-    //   : 15 * 60,
-    timerType: "DECREMENTAL",
-    endTime: 0,
-    onTimeOver: () => {
-      audioPlay();
-    },
-  });
+  const time = useAppSelector((state) => state.timer.time);
+  const initialTime = useAppSelector((state) => state.timer.initialTime);
+  const pomodoroTime = useAppSelector((state) => state.timer.pomodoroTime);
+  const shortBreakTime = useAppSelector((state) => state.timer.shortBreakTime);
+  const longBreakTime = useAppSelector((state) => state.timer.longBreakTime);
   const titleName = currentMode === "pomodoro" ? "focus!" : "relax!";
-  useEffect(() => {
-    document.title = `${minutes}:${
-      seconds < 10 ? `0${seconds}` : seconds
-    } - ${titleName}`;
-  }, [time, titleName]);
-  const onTimer = () => {
-    if (time === initTime) audioPlay();
-    start();
-    dispatch(timerActions.setIsTimerOn());
+  // useEffect(() => {
+  //   document.title = `${minutes}:${
+  //     seconds < 10 ? `0${seconds}` : seconds
+  //   } - ${titleName}`;
+  // }, [time, titleName]);
+  // const onTimer = () => {
+  //   if (time === initTime) audioPlay();
+  //   start();
+  //   dispatch(timerActions.setIsTimerOn());
+  // };
+  const toggleTimer = () => {
+    dispatch(timerActions.setIsTimerOn(!isTimerOn));
   };
-  const pauseTimer = () => {
-    pause();
-    dispatch(timerActions.setIsTimerOn());
+  const resetTimer = () => {
+    dispatch(timerActions.setTime(initialTime));
+    dispatch(timerActions.setIsTimerOn(false));
+  };
+  const getTime = () => {
+    const minutes = Math.floor(time / 60);
+    const seconds = time - minutes * 60;
+    return `${minutes < 10 ? "0" + minutes : minutes}:${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
   };
   const onPomodoro = () => {
-    console.log("adsas");
-    if (isTimerOn) pause();
-    if (isTimerOn) dispatch(timerActions.setIsTimerOn());
-    dispatch(timerActions.setTime(25 * 60));
-    reset();
+    dispatch(timerActions.setTime(pomodoroTime));
+    dispatch(timerActions.setInitialTime(pomodoroTime));
+    dispatch(timerActions.setIsTimerOn(false));
+    // setInitialTime(workTime);
   };
   const onShortBreak = () => {
-    if (isTimerOn) pause();
-    if (isTimerOn) dispatch(timerActions.setIsTimerOn());
-    dispatch(timerActions.setCurrentMode("shortBreak"));
-    dispatch(timerActions.setTime(5 * 60));
-    reset();
-    setSelectedTime((prevState) => (prevState = 5 * 25));
+    dispatch(timerActions.setTime(shortBreakTime));
+    dispatch(timerActions.setInitialTime(shortBreakTime));
+    dispatch(timerActions.setIsTimerOn(false));
   };
-  console.log(selectedTime);
+  const onLongBreak = () => {
+    dispatch(timerActions.setTime(longBreakTime));
+    dispatch(timerActions.setInitialTime(longBreakTime));
+    dispatch(timerActions.setIsTimerOn(false));
+  };
   function audioPlay() {
     new Audio(require("../../assets/audio/mainSound.mp3")).play();
   }
-  const minutes = Math.floor(time / 60);
-  const seconds = time - 60 * minutes;
+  useEffect(() => {
+    if (time > 0 && isTimerOn) {
+      const interval = setInterval(() => {
+        dispatch(timerActions.setTime(time - 1));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [time, isTimerOn]);
   return (
     <div className="container flex flex-col items-center">
       <div>
@@ -74,26 +79,27 @@ export default function Timer() {
         >
           Short Break
         </button>
-        <button className="bg-blue-500 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2">
+        <button
+          className="bg-blue-500 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
+          onClick={onLongBreak}
+        >
           Long Break
         </button>
       </div>
-      <h1 className="text-8xl">
-        {`${minutes} : ${seconds < 10 ? `0${seconds}` : seconds}`}{" "}
-      </h1>
+      <h1 className="text-8xl">{getTime()}</h1>
       <div className="flex flex-row items-center">
         <div>
           {!isTimerOn ? (
             <button
               className="bg-blue-500 bg-opacity-50 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-              onClick={onTimer}
+              onClick={toggleTimer}
             >
               Start
             </button>
           ) : (
             <button
               className="bg-blue-500 text-white text-4xl  rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-              onClick={pauseTimer}
+              onClick={toggleTimer}
             >
               Pause
             </button>
@@ -102,7 +108,7 @@ export default function Timer() {
         <div>
           <button
             className=" bg-blue-500 text-white rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-            onClick={reset}
+            onClick={resetTimer}
           >
             <svg
               width="45px"
@@ -139,9 +145,6 @@ export default function Timer() {
           </button>
         </div>
       </div>
-      <p>Elapsed time: {time}</p>
-      {status === "RUNNING" && <p>Running...</p>}
-      <audio src="../../as" />
     </div>
   );
 }

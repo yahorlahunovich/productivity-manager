@@ -1,13 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
+  initialTime: number;
   time: number;
+  pomodoroTime: number;
+  shortBreakTime: number;
+  longBreakTime: number;
   isTimerOn: boolean;
   currentMode: "pomodoro" | "shortBreak" | "longBreak";
 };
 
 const initialState: InitialState = {
+  initialTime: 25 * 60,
   time: 25 * 60,
+  pomodoroTime: 25 * 60,
+  shortBreakTime: 5 * 60,
+  longBreakTime: 15 * 60,
   isTimerOn: false,
   currentMode: "pomodoro",
 };
@@ -17,18 +25,19 @@ const timerSlice = createSlice({
   initialState,
   reducers: {
     setTime(state, action: PayloadAction<number>) {
-      console.log("click");
       state.time = action.payload;
-      console.log(`state time =${state.time}`);
     },
-    setIsTimerOn(state) {
-      state.isTimerOn = !state.isTimerOn;
+    setIsTimerOn(state, action: PayloadAction<boolean>) {
+      state.isTimerOn = action.payload;
     },
     setCurrentMode(
       state,
       action: PayloadAction<"pomodoro" | "shortBreak" | "longBreak">
     ) {
       state.currentMode = action.payload;
+    },
+    setInitialTime(state, action: PayloadAction<number>) {
+      state.initialTime = action.payload;
     },
   },
 });
