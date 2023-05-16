@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { timerActions } from "../../redux/timerSlice";
 
-export default function Timer() {
+interface TimerProps {
+  onBackgroundChange: (mode: "pomodoro" | "shortBreak" | "longBreak") => void;
+}
+export default function Timer({ onBackgroundChange }: TimerProps) {
   const dispatch = useAppDispatch();
   const currentMode = useAppSelector((state) => state.timer.currentMode);
   const isTimerOn = useAppSelector((state) => state.timer.isTimerOn);
@@ -19,7 +22,7 @@ export default function Timer() {
   }, [time, titleName]);
   const toggleTimer = () => {
     dispatch(timerActions.setIsTimerOn(!isTimerOn));
-    if (!isTimerOn && initialTime === time) audioPlay();
+    audioPlay();
   };
   const resetTimer = () => {
     dispatch(timerActions.setTime(initialTime));
@@ -63,55 +66,47 @@ export default function Timer() {
     }
   }, [time, isTimerOn]);
   return (
-    <div className="container flex flex-col items-center">
-      <div>
+    <div className="container flex flex-col items-center max-w-3xl mx-auto p-5 rounded-3xl bg-white bg-opacity-20">
+      <div className="mb-5 text-white text-lg">
         <button
-          className="bg-blue-500 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
+          className={`px-2 ${
+            currentMode === "pomodoro" ? "font-bold text-xl" : ""
+          }`}
           onClick={onPomodoro}
         >
           Pomodoro
         </button>
+        <span>|</span>
         <button
-          data-time="25"
-          className="bg-blue-500 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
+          className={`px-2 ${
+            currentMode === "shortBreak" ? "font-bold text-xl" : ""
+          }`}
           onClick={onShortBreak}
         >
           Short Break
         </button>
+        <span>|</span>
         <button
-          className="bg-blue-500 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
+          className={`px-2 ${
+            currentMode === "longBreak" ? "font-bold text-xl" : ""
+          }`}
           onClick={onLongBreak}
         >
           Long Break
         </button>
       </div>
-      <h1 className="text-8xl">{getTime()}</h1>
+      <h1 className="text-8xl text-white font-bold">{getTime()}</h1>
       <div className="flex flex-row items-center">
         <div>
-          {!isTimerOn ? (
-            <button
-              className="bg-blue-500 bg-opacity-50 text-white text-4xl rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-              onClick={toggleTimer}
-            >
-              Start
-            </button>
-          ) : (
-            <button
-              className="bg-blue-500 text-white text-4xl  rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-              onClick={toggleTimer}
-            >
-              Pause
-            </button>
-          )}
+          <button className="animationBut w-36 h-20" onClick={toggleTimer}>
+            {!isTimerOn ? "Start" : "Pause"}
+          </button>
         </div>
         <div>
-          <button
-            className=" bg-blue-500 text-white rounded-md p-3 px-5 hover:bg-blue-600 m-2"
-            onClick={resetTimer}
-          >
+          <button className="animationBut w-36 h-20 log" onClick={resetTimer}>
             <svg
-              width="45px"
-              height="45px"
+              width="50px"
+              height="50px"
               viewBox="0 0 21 21"
               xmlns="http://www.w3.org/2000/svg"
               fill="#000000"
