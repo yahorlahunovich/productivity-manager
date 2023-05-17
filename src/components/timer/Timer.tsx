@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { timerActions } from "../../redux/timerSlice";
 
-interface TimerProps {
-  onBackgroundChange: (mode: "pomodoro" | "shortBreak" | "longBreak") => void;
-}
-export default function Timer({ onBackgroundChange }: TimerProps) {
+export default function Timer() {
   const dispatch = useAppDispatch();
+  const session = useAppSelector((state) => state.timer.session);
   const currentMode = useAppSelector((state) => state.timer.currentMode);
   const isTimerOn = useAppSelector((state) => state.timer.isTimerOn);
   const time = useAppSelector((state) => state.timer.time);
@@ -63,9 +61,26 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [time, isTimerOn]);
+  }, [time, isTimerOn, dispatch]);
+  useEffect(() => {
+    if (time === 0) {
+      audioPlay();
+      if (initialTime === pomodoroTime) {
+        dispatch(timerActions.setSession());
+      }
+      dispatch(timerActions.setIsTimerOn(false));
+      if (session === 0) onShortBreak();
+      else if (currentMode === "pomodoro" && session % 2 !== 0) {
+        onShortBreak();
+      } else if (currentMode === "pomodoro" && session % 2 === 0) {
+        onLongBreak();
+      } else if (currentMode === "shortBreak" || currentMode === "longBreak") {
+        onPomodoro();
+      }
+    }
+  }, [time, dispatch]);
   return (
-    <div className="container flex flex-col items-center max-w-3xl mx-auto p-5 rounded-3xl bg-white bg-opacity-20">
+    <div className="container flex flex-col items-center max-w-xl mx-auto p-5 rounded-3xl bg-white bg-opacity-20">
       <div className="mb-5 text-white text-lg">
         <button
           className={`px-2 ${
@@ -73,7 +88,7 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
           }`}
           onClick={onPomodoro}
         >
-          Pomodoro
+          Arancioro
         </button>
         <span>|</span>
         <button
@@ -98,7 +113,7 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
       <div className="flex flex-row items-center">
         <div>
           <button
-            className={`animationBut w-36 h-20 ${
+            className={`animationBut h-20 ${
               currentMode === "pomodoro"
                 ? "bg-mainOrange"
                 : currentMode === "shortBreak"
@@ -114,7 +129,7 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
         </div>
         <div>
           <button
-            className={`animationBut w-36 h-20 ${
+            className={`animationBut h-20 ${
               currentMode === "pomodoro"
                 ? "bg-mainOrange"
                 : currentMode === "shortBreak"
@@ -159,6 +174,9 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
             </svg>
           </button>
         </div>
+      </div>
+      <div className="mt-5 text-white text-xl font-bolder">
+        <span>Session: {session}</span>
       </div>
     </div>
   );
