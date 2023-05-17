@@ -40,7 +40,6 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
     dispatch(timerActions.setInitialTime(pomodoroTime));
     dispatch(timerActions.setIsTimerOn(false));
     dispatch(timerActions.setCurrentMode("pomodoro"));
-    // setInitialTime(workTime);
   };
   const onShortBreak = () => {
     dispatch(timerActions.setTime(shortBreakTime));
@@ -98,12 +97,34 @@ export default function Timer({ onBackgroundChange }: TimerProps) {
       <h1 className="text-8xl text-white font-bold">{getTime()}</h1>
       <div className="flex flex-row items-center">
         <div>
-          <button className="animationBut w-36 h-20" onClick={toggleTimer}>
+          <button
+            className={`animationBut w-36 h-20 ${
+              currentMode === "pomodoro"
+                ? "bg-mainOrange"
+                : currentMode === "shortBreak"
+                ? "bg-mainBlue"
+                : currentMode === "longBreak"
+                ? "bg-mainGreen"
+                : ""
+            }`}
+            onClick={toggleTimer}
+          >
             {!isTimerOn ? "Start" : "Pause"}
           </button>
         </div>
         <div>
-          <button className="animationBut w-36 h-20 log" onClick={resetTimer}>
+          <button
+            className={`animationBut w-36 h-20 ${
+              currentMode === "pomodoro"
+                ? "bg-mainOrange"
+                : currentMode === "shortBreak"
+                ? "bg-mainBlue"
+                : currentMode === "longBreak"
+                ? "bg-mainGreen"
+                : ""
+            }`}
+            onClick={resetTimer}
+          >
             <svg
               width="50px"
               height="50px"
