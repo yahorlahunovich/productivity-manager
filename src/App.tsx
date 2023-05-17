@@ -3,6 +3,7 @@ import Timer from "./components/timer/Timer";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import { useAppSelector } from "./redux/hooks";
+import Todo from "./components/todo/Todo";
 
 function App() {
   const currentMode = useAppSelector((state) => state.timer.currentMode);
@@ -20,6 +21,7 @@ function App() {
     >
       <Navbar />
       <Timer />
+      <Todo />
       <Footer />
     </div>
   );
