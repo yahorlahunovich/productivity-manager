@@ -1,6 +1,7 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { todoActions } from "../../redux/todoSlice";
+import uniqid from "uniqid";
 
 export default function TodoForm() {
   const dispatch = useAppDispatch();
@@ -8,7 +9,8 @@ export default function TodoForm() {
 
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(todoActions.addItem());
+    if (inputValue.trim().length === 0) return;
+    dispatch(todoActions.addItem({ id: uniqid() }));
     dispatch(todoActions.setCurrentTask(""));
   };
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
