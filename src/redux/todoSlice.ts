@@ -50,6 +50,14 @@ const todoSlice = createSlice({
       );
       state.todoItems[index].isCompleted = false;
     },
+    clearAll(state) {
+      state.todoItems = [];
+    },
+    clearCompletedTasks(state) {
+      state.todoItems = state.todoItems.filter(
+        (item) => item.isCompleted !== true
+      );
+    },
   },
 });
 

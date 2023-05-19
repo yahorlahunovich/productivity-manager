@@ -7,7 +7,6 @@ import { tasksActions } from "../../redux/tasksSlice";
 export default function Tasks() {
   const dispatch = useAppDispatch();
   const isAdding = useAppSelector((state) => state.tasks.isAdding);
-  const todoItems = useAppSelector((state) => state.todo.todoItems);
   const addTask = () => {
     dispatch(tasksActions.setIsAdding());
   };
@@ -22,14 +21,6 @@ export default function Tasks() {
         </button>
       )}
       <TodoItems />
-      {todoItems.length > 0 ? (
-        <div>
-          <button>Clear Finished Tasks</button>
-          <button>Clear All Tasks</button>
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 }
