@@ -1,23 +1,19 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { stat } from "fs";
 
 interface TodoItem {
   task: string;
   id: string;
+  isCompleted: boolean;
 }
 
 type InitialState = {
   todoItems: TodoItem[];
   currentTask: string;
-  isEditing: boolean;
-  editingTask: string;
 };
 
 const initialState: InitialState = {
   todoItems: [],
   currentTask: "",
-  isEditing: false,
-  editingTask: "",
 };
 
 const todoSlice = createSlice({
@@ -32,6 +28,7 @@ const todoSlice = createSlice({
         {
           task: state.currentTask,
           id: action.payload.id,
+          isCompleted: false,
         },
         ...state.todoItems,
       ];
@@ -41,14 +38,18 @@ const todoSlice = createSlice({
         (item) => item.id !== action.payload
       );
     },
-    editItem(state, action: PayloadAction<string>) {
-      state.isEditing = true;
-      let index = state.todoItems.findIndex(
+    confirmTask(state, action: PayloadAction<string>) {
+      let index: number = state.todoItems.findIndex(
         (item) => item.id === action.payload
       );
-      console.log((state.editingTask = state.todoItems[index].task));
+      state.todoItems[index].isCompleted = true;
     },
-    confirmTask(state, action: PayloadAction<string>) {},
+    unconfirmTask(state, action: PayloadAction<string>) {
+      let index: number = state.todoItems.findIndex(
+        (item) => item.id === action.payload
+      );
+      state.todoItems[index].isCompleted = false;
+    },
   },
 });
 

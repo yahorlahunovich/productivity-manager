@@ -80,7 +80,7 @@ export default function Timer() {
     }
   }, [time, dispatch]);
   return (
-    <div className="container flex flex-col items-center max-w-xl mx-auto p-5 rounded-3xl bg-white bg-opacity-20">
+    <div className="container flex flex-col items-center max-w-xl mx-auto mb-5 p-5 rounded-3xl bg-white bg-opacity-20">
       <div className="mb-5 text-white text-lg">
         <button
           className={`px-2 ${
