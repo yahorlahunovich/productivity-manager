@@ -29,13 +29,13 @@ export default function TodoItems() {
         {todoItems.map((item) => (
           <li
             key={item.id}
-            className="flex flex-row items-center justify-between gap-4 text-xl bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl border border-white "
+            className="flex flex-row items-center justify-between gap-4 text-2xl font-semibold bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2"
           >
             <>
               <div>
                 <input
                   type="checkbox"
-                  className="checkbox-spin scale-150 m-1"
+                  className="checkbox-spin m-3"
                   onChange={(e) => {
                     confirmTask(e, item.id);
                   }}
@@ -46,7 +46,10 @@ export default function TodoItems() {
               </div>
               <div className="flex gap-4">
                 <button onClick={() => deleteItem(item.id)}>
-                  <FontAwesomeIcon icon={faTrash} />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className="hover:text-gray-200"
+                  />
                 </button>
               </div>
             </>

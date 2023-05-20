@@ -18,7 +18,7 @@ export default function Tasks() {
       {isAdding ? (
         <TodoForm />
       ) : (
-        <button className="text-white py-4 px-10 bg-white bg-opacity-20 hover:bg-opacity-30 mb-5 mt-1" onClick={addTask}>
+        <button className="text-white py-4 px-10 bg-white bg-opacity-20 hover:bg-opacity-30 mb-10 mt-1" onClick={addTask}>
           <FontAwesomeIcon icon={faPlus} size="2xl" />
         </button>
       )}

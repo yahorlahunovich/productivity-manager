@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+input {
+  outline: none;
+}
 
+input[type="checkbox"] {
+  transform: scale(2);
+}
 
 .animationBut {
   position: relative;
@@ -59,4 +65,3 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
-

@@ -30,11 +30,11 @@ export default function TodoForm() {
         type="text"
         onChange={onChangeHandler}
         value={inputValue}
-        className="rounded-lg h-8 my-3 mx-1"
+        className="rounded-lg h-8 my-3 mx-1 bg-white bg-opacity-20 text-white text-2xl p-6 font-semibold"
       />
       <button
         type="submit"
-        className={`bg-white py-1 px-3 rounded-lg   ${
+        className={`bg-white py-2 rounded-lg text-2xl mb-10 ${
           currentMode === "pomodoro"
             ? "text-mainOrange"
             : currentMode === "shortBreak"
