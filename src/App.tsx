@@ -8,7 +8,7 @@ function App() {
   const currentMode = useAppSelector((state) => state.timer.currentMode);
   return (
     <div
-      className={`min-h-screen p-10 ${
+      className={`min-h-screen p-10 flex flex-col items-center ${
         currentMode === "pomodoro"
           ? "bg-mainOrange"
           : currentMode === "shortBreak"
@@ -20,7 +20,6 @@ function App() {
     >
       <Timer />
       <Tasks />
-      {/* <Todo /> */}
     </div>
   );
 }

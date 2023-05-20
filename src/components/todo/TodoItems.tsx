@@ -1,6 +1,8 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { todoActions } from "../../redux/todoSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export default function TodoItems() {
   const todoItems = useAppSelector((state) => state.todo.todoItems);
@@ -25,11 +27,15 @@ export default function TodoItems() {
     <>
       <ul>
         {todoItems.map((item) => (
-          <li key={item.id} className="flex gap-4">
+          <li
+            key={item.id}
+            className="flex flex-row items-center justify-between gap-4 text-xl bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl border border-white "
+          >
             <>
               <div>
                 <input
                   type="checkbox"
+                  className="checkbox-spin scale-150 m-1"
                   onChange={(e) => {
                     confirmTask(e, item.id);
                   }}
@@ -39,16 +45,22 @@ export default function TodoItems() {
                 </span>
               </div>
               <div className="flex gap-4">
-                <button onClick={() => deleteItem(item.id)}>Delete</button>
+                <button onClick={() => deleteItem(item.id)}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </div>
             </>
           </li>
         ))}
       </ul>
       {todoItems.length > 0 ? (
-        <div>
-          <button onClick={clearCompletedTasks}>Clear Completed Tasks</button>
-          <button onClick={clearAllTasks}>Clear All Tasks</button>
+        <div className="text-white flex flex-row justify-between gap-2">
+          <button onClick={clearCompletedTasks} className="hover:text-gray-200">
+            Clear Completed Tasks
+          </button>
+          <button onClick={clearAllTasks} className="hover:text-gray-200">
+            Clear All Tasks
+          </button>
         </div>
       ) : (
         ""

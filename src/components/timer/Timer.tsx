@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { timerActions } from "../../redux/timerSlice";
-// import { TbReload } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function Timer() {
   const dispatch = useAppDispatch();
@@ -141,7 +142,7 @@ export default function Timer() {
             }`}
             onClick={resetTimer}
           >
-            TbReload
+            <FontAwesomeIcon icon={faRotateRight} size="xl" />
           </button>
         </div>
       </div>

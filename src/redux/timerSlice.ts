@@ -12,10 +12,10 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  initialTime: 10,
-  time: 10,
-  pomodoroTime: 10,
-  shortBreakTime: 5,
+  initialTime: 25 * 60,
+  time: 25 * 60,
+  pomodoroTime: 25 * 60,
+  shortBreakTime: 5 * 60,
   longBreakTime: 15 * 60,
   isTimerOn: false,
   currentMode: "pomodoro",
