@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 type InitialState = {
   isAdding: boolean;
@@ -12,8 +12,8 @@ const tasksSlice = createSlice({
   name: "tasks",
   initialState,
   reducers: {
-    setIsAdding(state) {
-      state.isAdding = !state.isAdding;
+    setIsAdding(state, action: PayloadAction<boolean>) {
+      state.isAdding = action.payload;
     },
   },
 });

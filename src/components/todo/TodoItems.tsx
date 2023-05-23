@@ -32,18 +32,23 @@ export default function TodoItems() {
             className="flex flex-row items-center justify-between gap-4 text-2xl font-semibold bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2"
           >
             <>
-              <div>
-                <input
-                  type="checkbox"
-                  className="checkbox-spin m-3"
-                  onChange={(e) => {
-                    confirmTask(e, item.id);
-                  }}
-                />
-                <span className={`${item.isCompleted ? "line-through" : ""}`}>
-                  {item.task}
-                </span>
+              <div className="flex flex-row items-center">
+                <div className="round mr-5">
+                  <input
+                    type="checkbox"
+                    id="checkbox"
+                    onChange={(e) => {
+                      console.log(item.id);
+                      confirmTask(e, item.id);
+                    }}
+                  />
+                  <label htmlFor="checkbox"></label>
+                </div>
               </div>
+
+              <span className={`${item.isCompleted ? "line-through" : ""}`}>
+                {item.task}
+              </span>
               <div className="flex gap-4">
                 <button onClick={() => deleteItem(item.id)}>
                   <FontAwesomeIcon

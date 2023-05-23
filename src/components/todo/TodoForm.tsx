@@ -16,21 +16,23 @@ export default function TodoForm() {
     if (inputValue.trim().length === 0) return;
     dispatch(todoActions.addItem({ id: uniqid() }));
     dispatch(todoActions.setCurrentTask(""));
-    dispatch(tasksActions.setIsAdding());
+    dispatch(tasksActions.setIsAdding(false));
   };
-  // const onBlurHandle = () => {
-  //   dispatch(tasksActions.setIsAdding());
-  // };
+  const onBlurHandle = () => {
+    dispatch(tasksActions.setIsAdding(false));
+  };
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(todoActions.setCurrentTask(e.target.value));
   };
   return (
-    <form onSubmit={submitForm} className="flex flex-col">
+    <form onSubmit={submitForm} className="flex flex-col" onBlur={onBlurHandle}>
+      <div></div>
       <input
         type="text"
         onChange={onChangeHandler}
         value={inputValue}
         className="rounded-lg h-8 my-3 mx-1 bg-white bg-opacity-20 text-white text-2xl p-6 font-semibold"
+        autoFocus
       />
       <button
         type="submit"
