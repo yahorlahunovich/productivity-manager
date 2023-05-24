@@ -10,6 +10,12 @@ input[type="checkbox"] {
   transform: scale(2);
 }
 
+form:active,
+form:focus {
+  border: none;
+  outline: none;
+}
+
 .animationBut {
   position: relative;
   display: inline-block;
