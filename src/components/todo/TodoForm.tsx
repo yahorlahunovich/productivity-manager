@@ -26,21 +26,21 @@ export default function TodoForm() {
   return (
     <form
       onSubmit={submitForm}
-      contentEditable
       className="flex flex-col bg-white bg-opacity-10 rounded-lg mt-2 mb-4"
     >
       <button
         className="text-white w-8 h-8 hover:text-gray-200"
+        type="button"
         onClick={closeForm}
       >
         <FontAwesomeIcon icon={faXmark} />
       </button>
-      <div className="flex flex-col p-5">
+      <div className="flex flex-col content-center p-5">
         <input
           type="text"
           onChange={onChangeHandler}
           value={inputValue}
-          className="rounded-lg h-8 my-3 mx-1 bg-white bg-opacity-20 text-white text-2xl p-6 font-semibold"
+          className="rounded-lg h-8 my-3 bg-white bg-opacity-20 text-white text-2xl p-6 font-semibold"
           autoFocus
         />
         <button

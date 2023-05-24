@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import TodoItems from "../components/todo/TodoItems";
 
 interface TodoItem {
   task: string;
@@ -32,31 +33,40 @@ const todoSlice = createSlice({
         },
         ...state.todoItems,
       ];
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
+    },
+    setItems(state, action: PayloadAction<TodoItem[]>) {
+      state.todoItems = action.payload;
     },
     deleteItem(state, action: PayloadAction<string>) {
       state.todoItems = state.todoItems.filter(
         (item) => item.id !== action.payload
       );
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
     },
     confirmTask(state, action: PayloadAction<string>) {
       let index: number = state.todoItems.findIndex(
         (item) => item.id === action.payload
       );
       state.todoItems[index].isCompleted = true;
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
     },
     unconfirmTask(state, action: PayloadAction<string>) {
       let index: number = state.todoItems.findIndex(
         (item) => item.id === action.payload
       );
       state.todoItems[index].isCompleted = false;
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
     },
     clearAll(state) {
       state.todoItems = [];
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
     },
     clearCompletedTasks(state) {
       state.todoItems = state.todoItems.filter(
         (item) => item.isCompleted !== true
       );
+      localStorage.setItem("items", JSON.stringify(state.todoItems));
     },
   },
 });

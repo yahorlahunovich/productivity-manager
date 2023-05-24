@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { todoActions } from "../../redux/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,32 +23,45 @@ export default function TodoItems() {
   const clearCompletedTasks = () => {
     dispatch(todoActions.clearCompletedTasks());
   };
+
+  useEffect(() => {
+    const initItems = localStorage.getItem("items");
+    const finalItems = JSON.parse(initItems || "{}");
+    dispatch(todoActions.setItems(finalItems));
+  }, []);
   return (
     <>
       <ul>
         {todoItems.map((item) => (
           <li
             key={item.id}
-            className="flex flex-row items-center justify-between gap-4 text-2xl font-semibold bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2"
+            className={`flex flex-row items-center justify-between gap-4 text-2xl font-semibold bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2 ${
+              item.isCompleted ? "bg-opacity-40" : ""
+            }`}
           >
             <>
               <div className="flex flex-row items-center">
-                <div className="round mr-5">
+                <div className="round ">
                   <input
                     type="checkbox"
                     id="checkbox"
+                    className="mr-5"
                     onChange={(e) => {
-                      console.log(item.id);
                       confirmTask(e, item.id);
                     }}
+                    checked={true ? item.isCompleted : false}
                   />
                   <label htmlFor="checkbox"></label>
                 </div>
-              </div>
 
-              <span className={`${item.isCompleted ? "line-through" : ""}`}>
-                {item.task}
-              </span>
+                <p
+                  className={`break-all ${
+                    item.isCompleted ? "line-through" : ""
+                  }`}
+                >
+                  {item.task}
+                </p>
+              </div>
               <div className="flex gap-4">
                 <button onClick={() => deleteItem(item.id)}>
                   <FontAwesomeIcon
