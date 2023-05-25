@@ -40,7 +40,7 @@ export default function TodoForm() {
           type="text"
           onChange={onChangeHandler}
           value={inputValue}
-          className="rounded-lg h-8 my-3 bg-white bg-opacity-20 text-white text-2xl p-6 font-semibold"
+          className="rounded-lg h-8 my-3 bg-white bg-opacity-20 text-white text-2xl p-6"
           autoFocus
         />
         <button

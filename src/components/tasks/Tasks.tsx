@@ -14,7 +14,7 @@ export default function Tasks() {
   };
   return (
     <div className="container flex flex-col justify-center mx-auto max-w-xl p-5 text-center">
-      <h1 className="text-white text-4xl mb-2">Tasks</h1>
+      <h1 className="text-white text-4xl mb-2 font-bold">Tasks</h1>
       {isAdding ? (
         <TodoForm />
       ) : (

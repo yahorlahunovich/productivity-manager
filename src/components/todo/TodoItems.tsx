@@ -36,7 +36,7 @@ export default function TodoItems() {
         {todoItems.map((item) => (
           <li
             key={item.id}
-            className={`flex flex-row items-center justify-between gap-4 text-2xl font-semibold bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2 ${
+            className={`flex flex-row items-center justify-between gap-4 text-2xl bg-white bg-opacity-20 text-white py-3 px-5 rounded-xl mb-2 ${
               item.isCompleted ? "bg-opacity-40" : ""
             }`}
           >

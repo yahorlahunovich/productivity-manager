@@ -44,7 +44,11 @@ const timerSlice = createSlice({
       state.isTimerOn = action.payload;
     },
     setCurrentMode(state, action: PayloadAction<string>) {
-      if (action.payload === null) {
+      if (
+        action.payload === null ||
+        action.payload === undefined ||
+        action.payload === "{}"
+      ) {
         state.currentMode = "pomodoro";
       } else {
         state.currentMode = action.payload;

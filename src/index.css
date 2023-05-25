@@ -1,9 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
 
+* {
+  font-family: "Varela Round", sans-serif;
+}
 input {
   outline: none;
+  font-family: "Varela Round", sans-serif;
+}
+button {
+  font-family: "Varela Round", sans-serif;
 }
 
 input[type="checkbox"] {
