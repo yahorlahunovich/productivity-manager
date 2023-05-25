@@ -4,6 +4,7 @@ import { todoActions } from "../../redux/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
+
 export default function TodoItems() {
   const todoItems = useAppSelector((state) => state.todo.todoItems);
   const dispatch = useAppDispatch();

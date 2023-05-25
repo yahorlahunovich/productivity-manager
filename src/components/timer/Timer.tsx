@@ -86,6 +86,16 @@ export default function Timer() {
     const finalSession = parseInt(initSession || "{}");
     dispatch(timerActions.setSessionStorage(finalSession));
   }, []);
+  useEffect(() => {
+    const time = sessionStorage.getItem("time");
+    const initialTime = sessionStorage.getItem("initialTime");
+    const currentMode = sessionStorage.getItem("currentMode");
+    const finalTime = parseInt(time || "{}");
+    const finalInitialTime = parseInt(initialTime || "{}");
+    dispatch(timerActions.setTime(finalTime));
+    dispatch(timerActions.setCurrentMode(currentMode || "{}"));
+    dispatch(timerActions.setInitialTime(finalInitialTime));
+  }, []);
   return (
     <div className="container flex flex-col items-center max-w-2xl mx-auto mb-5 p-5 rounded-3xl bg-white bg-opacity-20">
       <div className="mb-5 text-white text-lg">
