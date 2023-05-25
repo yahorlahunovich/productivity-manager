@@ -98,7 +98,7 @@ export default function Timer() {
   }, []);
   return (
     <div className="container flex flex-col items-center max-w-2xl mx-auto mb-5 p-5 rounded-3xl bg-white bg-opacity-20">
-      <div className="mb-5 text-white text-lg">
+      <div className="flex sm:flex-row flex-col mb-5 text-white text-lg">
         <button
           className={`px-2 ${
             currentMode === "pomodoro" ? "font-bold text-xl" : ""
@@ -107,7 +107,7 @@ export default function Timer() {
         >
           Arancioro
         </button>
-        <span>|</span>
+        <span className="sm:inline-block hidden">|</span>
         <button
           className={`px-2 ${
             currentMode === "shortBreak" ? "font-bold text-xl" : ""
@@ -116,7 +116,7 @@ export default function Timer() {
         >
           Short Break
         </button>
-        <span>|</span>
+        <span className="sm:inline-block hidden">|</span>
         <button
           className={`px-2 ${
             currentMode === "longBreak" ? "font-bold text-xl" : ""
@@ -127,7 +127,7 @@ export default function Timer() {
         </button>
       </div>
       <h1 className="text-8xl text-white font-bold">{getTime()}</h1>
-      <div className="flex flex-row items-center">
+      <div className="flex sm:flex-row flex-col items-center">
         <div>
           <button
             className={`animationBut h-20 ${
