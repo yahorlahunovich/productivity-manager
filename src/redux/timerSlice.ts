@@ -12,9 +12,9 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  initialTime: 25 * 60,
-  time: 25 * 60,
-  pomodoroTime: 25 * 60,
+  initialTime: 5,
+  time: 5,
+  pomodoroTime: 5,
   shortBreakTime: 5 * 60,
   longBreakTime: 15 * 60,
   isTimerOn: false,
@@ -43,6 +43,14 @@ const timerSlice = createSlice({
     },
     setSession(state) {
       state.session++;
+      sessionStorage.setItem("session", state.session.toString());
+    },
+    setSessionStorage(state, action: PayloadAction<number>) {
+      if (isNaN(action.payload)) {
+        state.session = 0;
+      } else {
+        state.session = action.payload;
+      }
     },
   },
 });

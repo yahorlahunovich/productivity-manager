@@ -81,6 +81,11 @@ export default function Timer() {
       }
     }
   }, [time, dispatch]);
+  useEffect(() => {
+    const initSession = sessionStorage.getItem("session");
+    const finalSession = parseInt(initSession || "{}");
+    dispatch(timerActions.setSessionStorage(finalSession));
+  }, []);
   return (
     <div className="container flex flex-col items-center max-w-2xl mx-auto mb-5 p-5 rounded-3xl bg-white bg-opacity-20">
       <div className="mb-5 text-white text-lg">

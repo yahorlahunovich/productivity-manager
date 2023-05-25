@@ -1,7 +1,6 @@
 import React from "react";
 import Timer from "./components/timer/Timer";
 import { useAppSelector } from "./redux/hooks";
-import Todo from "./components/todo/Todo";
 import Tasks from "./components/tasks/Tasks";
 import Footer from "./components/footer/Footer";
 

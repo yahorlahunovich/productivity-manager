@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import TodoItems from "../components/todo/TodoItems";
 
 interface TodoItem {
   task: string;
