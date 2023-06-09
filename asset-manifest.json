@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/productivity-manager/static/css/main.5ab9b7ac.css",
-    "main.js": "/productivity-manager/static/js/main.ed2b6a69.js",
+    "main.js": "/productivity-manager/static/js/main.9f152371.js",
     "static/media/mainSound.mp3": "/productivity-manager/static/media/mainSound.8a6597e09c5e1a87b6c8.mp3",
     "index.html": "/productivity-manager/index.html",
     "main.5ab9b7ac.css.map": "/productivity-manager/static/css/main.5ab9b7ac.css.map",
-    "main.ed2b6a69.js.map": "/productivity-manager/static/js/main.ed2b6a69.js.map"
+    "main.9f152371.js.map": "/productivity-manager/static/js/main.9f152371.js.map"
   },
   "entrypoints": [
     "static/css/main.5ab9b7ac.css",
-    "static/js/main.ed2b6a69.js"
+    "static/js/main.9f152371.js"
   ]
 }
