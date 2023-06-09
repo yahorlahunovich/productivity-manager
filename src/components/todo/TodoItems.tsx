@@ -4,7 +4,6 @@ import { todoActions } from "../../redux/todoSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-
 export default function TodoItems() {
   const todoItems = useAppSelector((state) => state.todo.todoItems);
   const dispatch = useAppDispatch();
@@ -28,8 +27,11 @@ export default function TodoItems() {
   useEffect(() => {
     const initItems = localStorage.getItem("items");
     const finalItems = JSON.parse(initItems || "{}");
-    dispatch(todoActions.setItems(finalItems));
+    if (Array.isArray(finalItems)) {
+      dispatch(todoActions.setItems(finalItems));
+    }
   }, []);
+  console.log(todoItems);
   return (
     <>
       <ul>
