@@ -13,7 +13,7 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  todoItems: [{ task: "be kind", id: "1", isCompleted: false }],
+  todoItems: [],
   currentTask: "",
   isEmpty: false,
 };
