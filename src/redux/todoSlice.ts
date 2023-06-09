@@ -9,11 +9,13 @@ interface TodoItem {
 type InitialState = {
   todoItems: TodoItem[];
   currentTask: string;
+  isEmpty: boolean;
 };
 
 const initialState: InitialState = {
   todoItems: [],
   currentTask: "",
+  isEmpty: false,
 };
 
 const todoSlice = createSlice({
@@ -66,6 +68,9 @@ const todoSlice = createSlice({
         (item) => item.isCompleted !== true
       );
       localStorage.setItem("items", JSON.stringify(state.todoItems));
+    },
+    setIsEmpty(state, action: PayloadAction<boolean>) {
+      state.isEmpty = action.payload;
     },
   },
 });

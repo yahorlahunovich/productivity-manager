@@ -10,18 +10,24 @@ export default function TodoForm() {
   const dispatch = useAppDispatch();
   const currentMode = useAppSelector((state) => state.timer.currentMode);
   const inputValue = useAppSelector((state) => state.todo.currentTask);
+  const isEmpty = useAppSelector((state) => state.todo.isEmpty);
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
-    if (inputValue.trim().length === 0) return;
+    if (inputValue.trim().length === 0) {
+      dispatch(todoActions.setIsEmpty(true));
+      return;
+    }
     dispatch(todoActions.addItem({ id: uniqid() }));
     dispatch(todoActions.setCurrentTask(""));
     dispatch(tasksActions.setIsAdding(false));
   };
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isEmpty === true) dispatch(todoActions.setIsEmpty(false));
     dispatch(todoActions.setCurrentTask(e.target.value));
   };
   const closeForm = () => {
     dispatch(tasksActions.setIsAdding(false));
+    if (isEmpty === true) dispatch(todoActions.setIsEmpty(false));
   };
   return (
     <form
@@ -40,7 +46,9 @@ export default function TodoForm() {
           type="text"
           onChange={onChangeHandler}
           value={inputValue}
-          className="rounded-lg h-8 my-3 bg-white bg-opacity-20 text-white text-2xl p-6"
+          className={`rounded-lg h-8 my-3 bg-white bg-opacity-20 text-white text-2xl p-6 ${
+            isEmpty ? "border-2 border-red-600" : ""
+          }`}
           autoFocus
         />
         <button
